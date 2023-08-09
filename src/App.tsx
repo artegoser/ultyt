@@ -13,7 +13,7 @@ declare global {
   }
 }
 function App() {
-  window.piped_api = new PipedAPI("https://ytapi.dc09.ru");
+  window.piped_api = new PipedAPI();
 
   return (
     <NextUIProvider>
