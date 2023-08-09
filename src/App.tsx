@@ -1,10 +1,9 @@
+import "./App.css";
 
-import './App.css'
-
-import {NextUIProvider} from "@nextui-org/react";
+import { NextUIProvider } from "@nextui-org/react";
 import { PipedAPI } from "piped-api";
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Trending from './pages/trending';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Trending from "./pages/trending";
 
 declare global {
   interface Window {
@@ -12,7 +11,7 @@ declare global {
   }
 }
 function App() {
-  window.piped_api = new PipedAPI("https://ytapi.dc09.ru");
+  window.piped_api = new PipedAPI(); //"https://ytapi.dc09.ru");
 
   return (
     <NextUIProvider>
@@ -22,7 +21,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </NextUIProvider>
-  )
+  );
 }
 
-export default App
+export default App;
