@@ -10,7 +10,7 @@ import { Video } from "piped-api/dist/types";
 import { useNavigate } from "react-router-dom";
 import { CheckCircleIcon, EyeIcon } from "@heroicons/react/24/solid";
 import { shortenNumber } from "./utils";
-export function VideoComponent({ video }: VideoComponentProps) {
+export function VideoComponent({ video, uploaderAvatar }: VideoComponentProps) {
   const navigate = useNavigate();
 
   return (
@@ -24,7 +24,10 @@ export function VideoComponent({ video }: VideoComponentProps) {
         <img className="w-full rounded-xl" src={video.thumbnail} />
       </CardHeader>
       <CardBody className="flex gap-3 flex-row">
-        <Avatar className="flex-none" src={video.uploaderAvatar} />
+        <Avatar
+          className="flex-none"
+          src={uploaderAvatar ? uploaderAvatar : video.uploaderAvatar}
+        />
         <div className="flex gap-3 flex-col">
           <Link color="foreground" href={`#${video.url}`}>
             {video.title}
@@ -61,7 +64,19 @@ export function SkeletonVideoComponent() {
     </Card>
   );
 }
+export function VideoContainer({ children }: VideoContainerProps) {
+  return (
+    <div className="grid md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5 gap-2 p-4">
+      {children}
+    </div>
+  );
+}
 
 type VideoComponentProps = {
   video: Video;
+  uploaderAvatar?: string;
+};
+
+type VideoContainerProps = {
+  children: React.ReactNode;
 };
