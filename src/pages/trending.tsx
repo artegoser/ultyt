@@ -1,6 +1,6 @@
 import { Video } from "piped-api/dist/types";
 import { useEffect, useState } from "react";
-import { VideoComponent } from "../components/video";
+import { SkeletonVideoComponent, VideoComponent } from "../components/video";
 
 export default function Trending() {
   const [trending, setTrending] = useState([] as Video[]);
@@ -15,6 +15,16 @@ export default function Trending() {
       getTrending();
     }
   });
+
+  if (trending.length === 0) {
+    return (
+      <div className="grid md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5 gap-2 p-4">
+        {[...Array(20).keys()].map((num) => (
+          <SkeletonVideoComponent key={num} />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="grid md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5 gap-2 p-4">

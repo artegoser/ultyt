@@ -1,4 +1,11 @@
-import { Avatar, Card, CardBody, CardHeader, Link } from "@nextui-org/react";
+import {
+  Avatar,
+  Card,
+  CardBody,
+  CardHeader,
+  Link,
+  Skeleton,
+} from "@nextui-org/react";
 import { Video } from "piped-api/dist/types";
 import { useNavigate } from "react-router-dom";
 import { CheckCircleIcon, EyeIcon } from "@heroicons/react/24/solid";
@@ -23,7 +30,7 @@ export function VideoComponent({ video }: VideoComponentProps) {
             {video.title}
           </Link>
           <Link color="foreground" href={`#${video.uploaderUrl}`}>
-            <div className="flex flex-row items-center">
+            <div className="flex flex-row items-center break-all">
               <p className="flex-none text-md">{video.uploaderName}</p>
               {video.uploaderVerified && (
                 <CheckCircleIcon className="w-6 h-6 p-1" />
@@ -37,6 +44,19 @@ export function VideoComponent({ video }: VideoComponentProps) {
             </p>
           </div>
         </div>
+      </CardBody>
+    </Card>
+  );
+}
+
+export function SkeletonVideoComponent() {
+  return (
+    <Card isBlurred isPressable shadow="none" className="space-y-5 p-4">
+      <Skeleton className="rounded-lg">
+        <div className="rounded-lg h-56 bg-default-300 p-4"></div>
+      </Skeleton>
+      <CardBody className="flex gap-3 flex-row">
+        <Skeleton className="flex rounded-full w-12 h-12" />
       </CardBody>
     </Card>
   );
