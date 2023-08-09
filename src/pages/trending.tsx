@@ -2,12 +2,12 @@ import { Video } from "piped-api/dist/types";
 import { useEffect, useState } from "react";
 import { SkeletonVideoComponent, VideoComponent } from "../components/video";
 
-export default function Trending() {
+export default function TrendingPage() {
   const [trending, setTrending] = useState([] as Video[]);
 
   useEffect(() => {
     async function getTrending() {
-      const trending = await window.piped_api.trending("US"); //await window.piped_api.search("artegoser");
+      const trending = await window.piped_api.trending("US");
       setTrending(trending);
     }
 
