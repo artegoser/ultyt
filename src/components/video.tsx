@@ -19,10 +19,10 @@ export function VideoComponent({ video }: VideoComponentProps) {
       <CardBody className="flex gap-3 flex-row">
         <Avatar className="flex-none" src={video.uploaderAvatar} />
         <div className="flex gap-3 flex-col">
-          <Link color="foreground" href={video.url}>
+          <Link color="foreground" href={`#${video.url}`}>
             {video.title}
           </Link>
-          <Link color="foreground" href={video.uploaderUrl}>
+          <Link color="foreground" href={`#${video.uploaderUrl}`}>
             <div className="flex flex-row items-center">
               <p className="flex-none text-md">{video.uploaderName}</p>
               {video.uploaderVerified && (

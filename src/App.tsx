@@ -2,7 +2,7 @@ import "./App.css";
 
 import { NextUIProvider } from "@nextui-org/react";
 import { PipedAPI } from "piped-api";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import Trending from "./pages/trending";
 import { NavbarComponent } from "./components/navbar";
 
@@ -16,13 +16,13 @@ function App() {
 
   return (
     <NextUIProvider>
-      <BrowserRouter>
+      <HashRouter>
         <NavbarComponent />
         <Routes>
           <Route path="/" element={<Navigate to="/trending" />} />
           <Route path="/trending" element={<Trending />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </NextUIProvider>
   );
 }
