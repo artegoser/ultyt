@@ -13,7 +13,7 @@
     "@heroicons/react": "^2.0.18",
     "@nextui-org/react": "^2.0.7",
     "framer-motion": "^10.15.1",
-    "piped-api": "^1.2.1",
+    "piped-api": "^1.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.14.2"

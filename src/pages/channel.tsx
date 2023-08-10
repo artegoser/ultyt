@@ -10,6 +10,7 @@ import { capitalize } from "../components/utils";
 import React from "react";
 import { PlaylistComponent } from "../components/playlist";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
+import { ChannelComponent } from "../components/channel";
 
 export default function ChannelPage() {
   const { id } = useParams();
@@ -58,11 +59,20 @@ class ChannelPageСomponent extends React.Component<
     this.setState({ channel, tab });
   }
 
-  componentDidUpdate() {
-    if (!this.state.tab) {
-      this.updateTab();
+  async updateChannel() {
+    const channel = (await window.piped_api.channel(
+      this.props.id || ""
+    )) as Channel;
+
+    this.setState({ ...this.state, channel });
+  }
+
+  async componentDidUpdate() {
+    if (this.props.id !== this.state?.channel?.id) {
+      await this.updateChannel();
     }
   }
+
   render() {
     if (!this.state) {
       return null;
@@ -111,13 +121,10 @@ class ChannelPageСomponent extends React.Component<
             {channel.tabs.map((tab, index) => {
               return (
                 <Button
-                  onClick={() => {
-                    setSearchParams({ tabId: String(index) });
+                  onClick={async () => {
+                    await setSearchParams({ tabId: String(index) });
 
-                    this.setState({
-                      ...this.state,
-                      tab: undefined,
-                    });
+                    await this.updateTab();
                   }}
                   key={tab.name}
                   className="text-xl font-bold mt-4"
@@ -151,7 +158,7 @@ class ChannelPageСomponent extends React.Component<
                   );
                 } else if (item.type === "channel") {
                   item = item as Channel;
-                  return <div>Soon...</div>;
+                  return <ChannelComponent key={item.url} channel={item} />;
                 } else {
                   <div className="" key={Math.random()}>
                     Idk how to render this

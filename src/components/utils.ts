@@ -20,3 +20,7 @@ export function getTheme() {
     return "light";
   }
 }
+
+export function reRenderPage() {
+  window.dispatchEvent(new Event("reRenderPage"));
+}
