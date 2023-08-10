@@ -14,12 +14,7 @@ export function VideoComponent({ video, uploaderAvatar }: VideoComponentProps) {
   const navigate = useNavigate();
 
   return (
-    <Card
-      isBlurred
-      isPressable
-      onPress={() => navigate(video.url)}
-      shadow="none"
-    >
+    <Card isPressable onPress={() => navigate(video.url)} shadow="none">
       <CardHeader>
         <img className="w-full rounded-xl" src={video.thumbnail} />
       </CardHeader>
@@ -33,8 +28,8 @@ export function VideoComponent({ video, uploaderAvatar }: VideoComponentProps) {
             {video.title}
           </Link>
           <Link color="foreground" href={`#${video.uploaderUrl}`}>
-            <div className="flex flex-row items-center break-all">
-              <p className="flex-none text-md">{video.uploaderName}</p>
+            <div className="flex flex-row items-center">
+              <p className="text-md">{video.uploaderName}</p>
               {video.uploaderVerified && (
                 <CheckCircleIcon className="w-6 h-6 p-1" />
               )}
@@ -54,7 +49,7 @@ export function VideoComponent({ video, uploaderAvatar }: VideoComponentProps) {
 
 export function SkeletonVideoComponent() {
   return (
-    <Card isBlurred isPressable shadow="none" className="space-y-5 p-4">
+    <Card isPressable shadow="none" className="space-y-5 p-4">
       <Skeleton className="rounded-lg">
         <div className="rounded-lg h-56 bg-default-300 p-4"></div>
       </Skeleton>
