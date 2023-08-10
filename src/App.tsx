@@ -1,6 +1,4 @@
 import "./App.css";
-
-import { NextUIProvider } from "@nextui-org/react";
 import { PipedAPI } from "piped-api";
 import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import TrendingPage from "./pages/trending";
@@ -16,16 +14,14 @@ function App() {
   window.piped_api = new PipedAPI();
 
   return (
-    <NextUIProvider>
-      <HashRouter>
-        <NavbarComponent />
-        <Routes>
-          <Route path="/" element={<Navigate to="/trending" />} />
-          <Route path="/trending" element={<TrendingPage />} />
-          <Route path="/channel/:id" element={<ChannelPage />} />
-        </Routes>
-      </HashRouter>
-    </NextUIProvider>
+    <HashRouter>
+      <NavbarComponent />
+      <Routes>
+        <Route path="/" element={<Navigate to="/trending" />} />
+        <Route path="/trending" element={<TrendingPage />} />
+        <Route path="/channel/:id" element={<ChannelPage />} />
+      </Routes>
+    </HashRouter>
   );
 }
 

@@ -10,3 +10,13 @@ export function shortenNumber(number: number) {
 export function capitalize(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+export function getTheme() {
+  if (window.matchMedia) {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  } else {
+    return "light";
+  }
+}
