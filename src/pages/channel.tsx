@@ -1,4 +1,4 @@
-import { Channel, Tab, Video } from "piped-api/dist/types";
+import { Channel, Playlist, Tab, Video } from "piped-api/dist/types";
 import {
   SkeletonVideoComponent,
   VideoComponent,
@@ -8,6 +8,8 @@ import { useParams, useSearchParams } from "react-router-dom";
 import { Button, Card, CardFooter } from "@nextui-org/react";
 import { capitalize } from "../components/utils";
 import React from "react";
+import { PlaylistComponent } from "../components/playlist";
+import { CheckCircleIcon } from "@heroicons/react/24/solid";
 
 export default function ChannelPage() {
   const { id } = useParams();
@@ -85,10 +87,13 @@ class ChannelPageСomponent extends React.Component<
               <img className="w-full rounded-xl" src={channel.bannerUrl} />
             </div>
             <CardFooter className="p-4 justify-between ">
-              <div className="flex flex-col">
+              <div className="flex flex-row">
                 <div className="flex flex-row gap-2 text-xl font-bold pl-2">
                   {channel.name}
                 </div>
+                {channel.verified && (
+                  <CheckCircleIcon className="w-6 h-6 p-1" />
+                )}
               </div>
             </CardFooter>
           </Card>
@@ -125,22 +130,32 @@ class ChannelPageСomponent extends React.Component<
 
           {tabId !== "videos" ? (
             <VideoContainer>
-              {tab?.content.map((video) => {
-                if (video.type === "stream") {
-                  video = video as Video;
+              {tab?.content.map((item) => {
+                if (item.type === "stream") {
+                  item = item as Video;
                   return (
                     <VideoComponent
-                      video={video}
-                      key={video.url}
+                      video={item}
+                      key={item.url}
                       uploaderAvatar={channel.avatarUrl}
                     />
                   );
-                } else {
+                } else if (item.type === "playlist") {
+                  item = item as Playlist;
                   return (
-                    <div className="" key={Math.random()}>
-                      Soon...
-                    </div>
+                    <PlaylistComponent
+                      playlist={item}
+                      key={item.url}
+                      uploaderAvatar={channel.avatarUrl}
+                    />
                   );
+                } else if (item.type === "channel") {
+                  item = item as Channel;
+                  return <div>Soon...</div>;
+                } else {
+                  <div className="" key={Math.random()}>
+                    Idk how to render this
+                  </div>;
                 }
               })}
             </VideoContainer>
