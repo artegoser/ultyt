@@ -2,7 +2,7 @@ import { Channel, Tab } from "piped-api/dist/types";
 import { SkeletonVideoComponent, VideoContainer } from "../components/video";
 import { useParams, useSearchParams } from "react-router-dom";
 import { Button, Card, CardFooter } from "@nextui-org/react";
-import { capitalize } from "../components/utils";
+import { capitalize, shortenNumber } from "../components/utils";
 import React from "react";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { ItemComponent } from "../components/item";
@@ -86,30 +86,34 @@ class ChannelPageСomponent extends React.Component<
       );
     } else {
       return (
-        <div className="grid grid-rows p-4">
+        <div className="grid grid-rows p-1 md:p-4">
           <Card radius="lg" shadow="none">
-            <div className="p-4">
+            <div className="md:p-4">
               <img className="w-full rounded-xl" src={channel.bannerUrl} />
             </div>
-            <CardFooter className="p-4 justify-between ">
-              <div className="flex flex-row">
-                <div className="flex flex-row gap-2 text-xl font-bold pl-2">
-                  {channel.name}
+            <CardFooter className="md:p-4 justify-between ">
+              <div className="flex flex-row gap-2 flex-wrap">
+                <div className="flex flex-row text-xl font-bold md:pl-2">
+                  <div>{channel.name}</div>
+                  {channel.verified && (
+                    <CheckCircleIcon className="w-6 h-6 md:p-1" />
+                  )}
                 </div>
-                {channel.verified && (
-                  <CheckCircleIcon className="w-6 h-6 p-1" />
-                )}
+
+                <div className="text-xl font-bold md:pl-2">
+                  {shortenNumber(channel.subscriberCount)} subscribers
+                </div>
               </div>
             </CardFooter>
           </Card>
 
-          <div className="flex flex-row flex-wrap gap-2  mt-4">
+          <div className="flex flex-row flex-wrap gap-2 m-4">
             <Button
               onClick={() => {
                 setSearchParams({ tabId: "videos" });
               }}
               key="videos"
-              className="text-xl font-bold mt-4"
+              className="text-xl font-bold"
             >
               Videos
             </Button>
@@ -122,7 +126,7 @@ class ChannelPageСomponent extends React.Component<
                     await this.updateTab();
                   }}
                   key={tab.name}
-                  className="text-xl font-bold mt-4"
+                  className="text-xl font-bold"
                 >
                   {capitalize(tab.name)}
                 </Button>

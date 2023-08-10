@@ -14,7 +14,10 @@ export function ItemComponent({ item, channel }: ItemComponentProps) {
     );
   } else if (item.type === "channel") {
     item = item as Channel;
-    return <ChannelComponent channel={item} />;
+    return [
+      <ChannelComponent channel={item} />,
+      <div className="2xl:col-span-1 xl:col-span-1 md:col-span-2 gap-2 p-1 md:p-4" />,
+    ];
   } else {
     <div className="" key={Math.random()}>
       Idk how to render this

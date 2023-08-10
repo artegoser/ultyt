@@ -28,7 +28,14 @@ function App() {
         <Route path="/trending" element={<TrendingPage />} />
         <Route path="/channel/:id" element={<ChannelPage />} />
         <Route path="/search" element={<SearchPage />} />
-        <Route path="*" element={<Navigate to="/trending" />} />
+        <Route
+          path="*"
+          element={
+            <div className=" font-bold text-center text-3xl">
+              Not realized page
+            </div>
+          }
+        />
       </Routes>
     </HashRouter>
   );

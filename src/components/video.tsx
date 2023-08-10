@@ -63,7 +63,7 @@ export function SkeletonVideoComponent() {
 }
 export function VideoContainer({ children }: VideoContainerProps) {
   return (
-    <div className="grid md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5 gap-2 p-4">
+    <div className="grid md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5 gap-2 p-1 md:p-4">
       {children}
     </div>
   );
