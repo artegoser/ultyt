@@ -1,36 +1,39 @@
 import { Video } from "piped-api/dist/types";
-import { useEffect, useState } from "react";
 import { SkeletonVideoComponent, VideoComponent } from "../components/video";
+import React from "react";
 
-export default function TrendingPage() {
-  const [trending, setTrending] = useState([] as Video[]);
+export default class TrendingPage extends React.Component {
+  state: { trending: Video[] } = {
+    trending: [],
+  };
 
-  useEffect(() => {
-    async function getTrending() {
-      const trending = await window.piped_api.trending("US");
-      setTrending(trending);
-    }
+  async componentDidMount() {
+    console.log("trending");
+    const trending = await window.piped_api.trending(
+      localStorage.getItem("region") || "US"
+    );
+    this.setState({ trending });
+  }
+
+  render() {
+    const { trending } = this.state;
 
     if (trending.length === 0) {
-      getTrending();
+      return (
+        <div className="grid md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5 gap-2 p-4">
+          {[...Array(20).keys()].map((num) => (
+            <SkeletonVideoComponent key={num} />
+          ))}
+        </div>
+      );
     }
-  });
 
-  if (trending.length === 0) {
     return (
       <div className="grid md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5 gap-2 p-4">
-        {[...Array(20).keys()].map((num) => (
-          <SkeletonVideoComponent key={num} />
+        {trending.map((video) => (
+          <VideoComponent video={video} key={video.url} />
         ))}
       </div>
     );
   }
-
-  return (
-    <div className="grid md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5 gap-2 p-4">
-      {trending.map((video) => (
-        <VideoComponent video={video} key={video.url} />
-      ))}
-    </div>
-  );
 }
