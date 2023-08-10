@@ -6,7 +6,7 @@ import {
   VideoContainer,
 } from "../components/video";
 import { useParams, useSearchParams } from "react-router-dom";
-import { Card, CardFooter } from "@nextui-org/react";
+import { Button, Card, CardFooter } from "@nextui-org/react";
 import { capitalize } from "../components/utils";
 
 export default function ChannelPage() {
@@ -48,45 +48,41 @@ export default function ChannelPage() {
   } else {
     return (
       <div className="grid grid-rows p-4">
-        <div className="">
-          <Card radius="lg" shadow="none">
-            <div className="p-4">
-              <img className="w-full rounded-xl" src={channel.bannerUrl} />
-            </div>
-            <CardFooter className="p-4 justify-between ">
-              <div className="flex flex-col">
-                <div className="flex flex-row gap-2 text-xl font-bold pl-2">
-                  {channel.name}
-                </div>
+        <Card radius="lg" shadow="none">
+          <div className="p-4">
+            <img className="w-full rounded-xl" src={channel.bannerUrl} />
+          </div>
+          <CardFooter className="p-4 justify-between ">
+            <div className="flex flex-col">
+              <div className="flex flex-row gap-2 text-xl font-bold pl-2">
+                {channel.name}
               </div>
-            </CardFooter>
-          </Card>
-        </div>
+            </div>
+          </CardFooter>
+        </Card>
 
-        <div className="flex flex-row flex-wrap gap-2 bg-white rounded-xl mt-4">
-          <div
-            style={{ cursor: "pointer" }}
+        <div className="flex flex-row flex-wrap gap-2  mt-4">
+          <Button
             onClick={() => {
               setSearchParams({ tabId: "videos" });
             }}
             key="videos"
-            className="text-xl font-bold p-4"
+            className="text-xl font-bold mt-4"
           >
             Videos
-          </div>
+          </Button>
           {channel.tabs.map((tab, index) => {
             return (
-              <div
-                style={{ cursor: "pointer" }}
+              <Button
                 onClick={() => {
                   setSearchParams({ tabId: String(index) });
                   setTab(undefined);
                 }}
                 key={tab.name}
-                className="text-xl font-bold p-4"
+                className="text-xl font-bold mt-4"
               >
                 {capitalize(tab.name)}
-              </div>
+              </Button>
             );
           })}
         </div>
