@@ -38,7 +38,9 @@ export function VideoComponent({ video, uploaderAvatar }: VideoComponentProps) {
           <div className="flex flex-row items-center">
             <EyeIcon className="w-6 h-6 p-1" />
             <p className="flex-none text-md">
-              {`${shortenNumber(video.views)} • ${video.uploadedDate}`}
+              {`${shortenNumber(video.views)}${
+                video.uploadedDate ? ` • ${video.uploadedDate}` : ""
+              }`}
             </p>
           </div>
         </div>

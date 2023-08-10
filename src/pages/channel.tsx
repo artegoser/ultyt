@@ -1,16 +1,11 @@
-import { Channel, Playlist, Tab, Video } from "piped-api/dist/types";
-import {
-  SkeletonVideoComponent,
-  VideoComponent,
-  VideoContainer,
-} from "../components/video";
+import { Channel, Tab } from "piped-api/dist/types";
+import { SkeletonVideoComponent, VideoContainer } from "../components/video";
 import { useParams, useSearchParams } from "react-router-dom";
 import { Button, Card, CardFooter } from "@nextui-org/react";
 import { capitalize } from "../components/utils";
 import React from "react";
-import { PlaylistComponent } from "../components/playlist";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
-import { ChannelComponent } from "../components/channel";
+import { ItemComponent } from "../components/item";
 
 export default function ChannelPage() {
   const { id } = useParams();
@@ -135,48 +130,20 @@ class ChannelPageСomponent extends React.Component<
             })}
           </div>
 
-          {tabId !== "videos" ? (
-            <VideoContainer>
-              {tab?.content.map((item) => {
-                if (item.type === "stream") {
-                  item = item as Video;
-                  return (
-                    <VideoComponent
-                      video={item}
-                      key={item.url}
-                      uploaderAvatar={channel.avatarUrl}
-                    />
-                  );
-                } else if (item.type === "playlist") {
-                  item = item as Playlist;
-                  return (
-                    <PlaylistComponent
-                      playlist={item}
-                      key={item.url}
-                      uploaderAvatar={channel.avatarUrl}
-                    />
-                  );
-                } else if (item.type === "channel") {
-                  item = item as Channel;
-                  return <ChannelComponent key={item.url} channel={item} />;
-                } else {
-                  <div className="" key={Math.random()}>
-                    Idk how to render this
-                  </div>;
-                }
-              })}
-            </VideoContainer>
-          ) : (
-            <VideoContainer>
-              {channel.relatedStreams.map((video) => (
-                <VideoComponent
-                  video={video}
-                  key={video.url}
-                  uploaderAvatar={channel.avatarUrl}
+          <VideoContainer>
+            {(tabId !== "videos"
+              ? tab?.content || []
+              : channel.relatedStreams
+            ).map((item) => {
+              return (
+                <ItemComponent
+                  key={Math.random()}
+                  item={item}
+                  channel={channel}
                 />
-              ))}
-            </VideoContainer>
-          )}
+              );
+            })}
+          </VideoContainer>
         </div>
       );
     }
