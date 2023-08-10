@@ -1,5 +1,9 @@
 import { Video } from "piped-api/dist/types";
-import { SkeletonVideoComponent, VideoComponent } from "../components/video";
+import {
+  SkeletonVideoComponent,
+  VideoComponent,
+  VideoContainer,
+} from "../components/video";
 import React from "react";
 
 export default class TrendingPage extends React.Component {
@@ -8,7 +12,6 @@ export default class TrendingPage extends React.Component {
   };
 
   async componentDidMount() {
-    console.log("trending");
     const trending = await window.piped_api.trending(
       localStorage.getItem("region") || "US"
     );
@@ -20,20 +23,20 @@ export default class TrendingPage extends React.Component {
 
     if (trending.length === 0) {
       return (
-        <div className="grid md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5 gap-2 p-4">
+        <VideoContainer>
           {[...Array(20).keys()].map((num) => (
             <SkeletonVideoComponent key={num} />
           ))}
-        </div>
+        </VideoContainer>
       );
     }
 
     return (
-      <div className="grid md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5 gap-2 p-4">
+      <VideoContainer>
         {trending.map((video) => (
           <VideoComponent video={video} key={video.url} />
         ))}
-      </div>
+      </VideoContainer>
     );
   }
 }

@@ -5,6 +5,7 @@ import TrendingPage from "./pages/trending";
 import { NavbarComponent } from "./components/navbar";
 import ChannelPage from "./pages/channel";
 import { useState } from "react";
+import SearchPage from "./pages/search";
 
 declare global {
   interface Window {
@@ -26,6 +27,8 @@ function App() {
         <Route path="/" element={<Navigate to="/trending" />} />
         <Route path="/trending" element={<TrendingPage />} />
         <Route path="/channel/:id" element={<ChannelPage />} />
+        <Route path="/search" element={<SearchPage />} />
+        <Route path="*" element={<Navigate to="/trending" />} />
       </Routes>
     </HashRouter>
   );

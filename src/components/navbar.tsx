@@ -9,9 +9,14 @@ import {
   NavbarMenuItem,
   Input,
 } from "@nextui-org/react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 export function NavbarComponent() {
+  const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
   return (
     <Navbar>
       <NavbarContent>
@@ -30,6 +35,13 @@ export function NavbarComponent() {
             radius="lg"
             placeholder="Type to search..."
             startContent={<MagnifyingGlassIcon className="h-6 w-6" />}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                navigate(`/search?q=${search}`);
+              }
+            }}
+            defaultValue={searchParams.get("q") || ""}
           />
         </NavbarItem>
       </NavbarContent>

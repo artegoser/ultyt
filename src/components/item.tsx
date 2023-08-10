@@ -6,11 +6,11 @@ import { ChannelComponent } from "./channel";
 export function ItemComponent({ item, channel }: ItemComponentProps) {
   if (item.type === "stream") {
     item = item as Video;
-    return <VideoComponent video={item} uploaderAvatar={channel.avatarUrl} />;
+    return <VideoComponent video={item} uploaderAvatar={channel?.avatarUrl} />;
   } else if (item.type === "playlist") {
     item = item as Playlist;
     return (
-      <PlaylistComponent playlist={item} uploaderAvatar={channel.avatarUrl} />
+      <PlaylistComponent playlist={item} uploaderAvatar={channel?.avatarUrl} />
     );
   } else if (item.type === "channel") {
     item = item as Channel;
@@ -23,6 +23,6 @@ export function ItemComponent({ item, channel }: ItemComponentProps) {
 }
 
 type ItemComponentProps = {
-  channel: Channel;
+  channel?: Channel;
   item: Video | Playlist | Channel;
 };

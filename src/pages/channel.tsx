@@ -78,11 +78,11 @@ class ChannelPageСomponent extends React.Component<
 
     if (!channel) {
       return (
-        <div className="grid md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5 gap-2 p-4">
+        <VideoContainer>
           {[...Array(20).keys()].map((num) => (
             <SkeletonVideoComponent key={num} />
           ))}
-        </div>
+        </VideoContainer>
       );
     } else {
       return (
