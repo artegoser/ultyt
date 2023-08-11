@@ -8,14 +8,20 @@ import {
   NavbarMenu,
   NavbarMenuItem,
   Input,
+  Button,
 } from "@nextui-org/react";
 import { useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 export function NavbarComponent() {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(undefined as string | undefined);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const [suggestions, setSuggestions] = useState([] as string[]);
+  async function updateSuggestions(query) {
+    const res = await window.piped_api.suggestions(query);
+    setSuggestions(res);
+  }
 
   return (
     <Navbar>
@@ -30,19 +36,49 @@ export function NavbarComponent() {
 
       <NavbarContent className="sm:flex gap-4" justify="start">
         <NavbarItem>
-          <Input
-            isClearable
-            radius="lg"
-            placeholder="Type to search..."
-            startContent={<MagnifyingGlassIcon className="h-6 w-6" />}
-            onChange={(e) => setSearch(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                navigate(`/search?q=${search}`);
+          <div className="relative block">
+            <Input
+              isClearable
+              radius="lg"
+              placeholder="Type to search..."
+              startContent={<MagnifyingGlassIcon className="h-6 w-6" />}
+              onChange={(e) => {
+                updateSuggestions(e.target.value);
+                setSearch(e.target.value);
+              }}
+              onKeyDown={async (e) => {
+                if (e.key === "Enter") {
+                  await setSuggestions([]);
+                  await navigate(`/search?q=${search}`);
+                }
+              }}
+              onClear={() => {
+                setSuggestions([]);
+                setSearch("");
+              }}
+              value={
+                (search !== undefined ? search : searchParams.get("q")) || ""
               }
-            }}
-            defaultValue={searchParams.get("q") || ""}
-          />
+            />
+            <div
+              className="absolute right-1/2 md:right-1 mt-1 flex flex-col justify-center backdrop-blur-3xl rounded-xl p-2 bg-gray-50 dark:bg-transparent"
+              style={{
+                backfaceVisibility: "hidden",
+                transform: "translateZ(0)",
+              }}
+            >
+              {suggestions.length > 0 &&
+                suggestions.map((suggestion) => (
+                  <Button
+                    key={suggestion}
+                    onClick={() => navigate(`/search?q=${suggestion}`)}
+                    className="m-1"
+                  >
+                    {suggestion}
+                  </Button>
+                ))}
+            </div>
+          </div>
         </NavbarItem>
       </NavbarContent>
 

@@ -16,7 +16,7 @@ export function ChannelComponent({
         navigate(channel.url || "");
       }}
       shadow="none"
-      className="md:col-span-2 xl:col-span-3 2xl:col-span-4 gap-2 p-1 md:p-4"
+      className="md:col-span-2 xl:col-span-4 2xl:col-span-5 gap-2 p-1 md:p-4"
     >
       <CardHeader>
         <div className="flex flex-row flex-wrap">
@@ -27,18 +27,17 @@ export function ChannelComponent({
               {channel.verified && <CheckCircleIcon className="w-6 h-6 p-1" />}
             </div>
           </Link>
-          <p className="pt-4 text-start">
-            {channel.description || "No description"}
-          </p>
         </div>
       </CardHeader>
-      {(channel.videos || -1) >= 0 && (
-        <CardBody className="flex gap-3 flex-row">
+
+      <CardBody className="flex flex-col p-1">
+        <p className="text-start">{channel.description || "No description"}</p>
+        {(channel.videos || -1) >= 0 && (
           <p className="text-md">
             {`${shortenNumber(channel.videos || -1)} videos`}
           </p>
-        </CardBody>
-      )}
+        )}
+      </CardBody>
     </Card>
   );
 }
