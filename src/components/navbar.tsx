@@ -36,7 +36,7 @@ export function NavbarComponent() {
 
       <NavbarContent className="sm:flex gap-4" justify="start">
         <NavbarItem>
-          <div className="relative block">
+          <div className="relative inline-block text-left">
             <Input
               isClearable
               radius="lg"
@@ -61,18 +61,14 @@ export function NavbarComponent() {
               }
             />
             <div
-              className="absolute right-1/2 md:right-1 mt-1 flex flex-col justify-center backdrop-blur-3xl rounded-xl p-2 bg-gray-50 dark:bg-transparent"
-              style={{
-                backfaceVisibility: "hidden",
-                transform: "translateZ(0)",
-              }}
+              className="absolute right-0 z-10 mt-2 flex flex-col backdrop-blur-3xl rounded-xl bg-gray-50 dark:bg-transparent"
             >
               {suggestions.length > 0 &&
                 suggestions.map((suggestion) => (
                   <Button
                     key={suggestion}
                     onClick={() => navigate(`/search?q=${suggestion}`)}
-                    className="m-1"
+                    className="m-1 break-all"
                   >
                     {suggestion}
                   </Button>
